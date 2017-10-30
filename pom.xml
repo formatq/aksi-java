@@ -179,7 +179,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <aksi.config.location>file:${project.basedir}/../conf/application.properties</aksi.config.location>
+                <aksi.config.location>file:${project.basedir}/config/application.properties</aksi.config.location>
             </properties>
         </profile>
 

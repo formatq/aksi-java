@@ -196,15 +196,14 @@
 
     <repositories>
         <repository>
-            <id>springsource-repo</id>
-            <name>SpringSource Repository</name>
+            <id>springsource-repo-release</id>
+            <name>SpringSource Repository release</name>
             <url>http://repo.springsource.org/release</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+        </repository>
+        <repository>
+            <id>springsource-repo-snapshot</id>
+            <name>SpringSource Repository snapshot</name>
+            <url>http://repo.springsource.org/snapshot</url>
         </repository>
         <repository>
             <id>codehaus.repo</id>

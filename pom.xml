@@ -196,6 +196,17 @@
 
     <repositories>
         <repository>
+            <id>springsource-repo</id>
+            <name>SpringSource Repository</name>
+            <url>http://repo.springsource.org/release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>codehaus.repo</id>
             <url>http://repository.codehaus.org</url>
             <name>codehaus.repo</name>
@@ -206,10 +217,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>springsource-repo</id>
-            <name>SpringSource Repository</name>
-            <url>http://repo.springsource.org/release</url>
-        </repository>
+
     </repositories>
 </project>

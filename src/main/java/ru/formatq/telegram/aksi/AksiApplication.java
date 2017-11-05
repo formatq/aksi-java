@@ -18,11 +18,15 @@ public class AksiApplication implements CommandLineRunner {
 
     private static Logger log = LoggerFactory.getLogger(AksiApplication.class);
 
-    @Autowired
-    TelegramBotsApi telegramBotsApi;
+    private final TelegramBotsApi telegramBotsApi;
+
+    private final AksiHandlers aksiHandlers;
 
     @Autowired
-    AksiHandlers aksiHandlers;
+    public AksiApplication(TelegramBotsApi telegramBotsApi, AksiHandlers aksiHandlers) {
+        this.telegramBotsApi = telegramBotsApi;
+        this.aksiHandlers = aksiHandlers;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(AksiApplication.class, args);

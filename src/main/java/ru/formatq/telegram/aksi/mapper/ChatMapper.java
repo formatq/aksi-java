@@ -8,7 +8,9 @@ import ru.formatq.telegram.aksi.model.Chat;
 @Mapper
 public interface ChatMapper {
 
-    @Select("select * from Chat where state = #{id}")
+    @Select("select * from Chats where id = #{id}")
     Chat selectChatById(@Param("id") Long id);
+
+
 
 }

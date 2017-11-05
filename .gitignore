@@ -74,6 +74,5 @@ fabric.properties
 hs_err_pid*
 .idea/
 aksi.iml
-config/
 src/test/
 target/

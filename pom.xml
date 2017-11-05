@@ -18,9 +18,11 @@
         <mysql.version>6.0.6</mysql.version>
         <commonsio.version>2.5</commonsio.version>
 
+        <hibernate-validator.version>5.3.5.Final</hibernate-validator.version>
+
         <mybatis.version>3.4.5</mybatis.version>
-        <mybatis-spring.version>2.0.0-SNAPSHOT</mybatis-spring.version>
-        <spring-boot.version>2.0.0.M5</spring-boot.version>
+        <mybatis-spring.version>1.3.1</mybatis-spring.version>
+        <spring-boot.version>1.5.7.RELEASE</spring-boot.version>
 
         <mybatis-spring-boot-starter.version>1.3.1</mybatis-spring-boot-starter.version>
 
@@ -94,7 +96,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>RELEASE</version>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <dependency>
@@ -199,4 +201,29 @@
             </properties>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>springsource-repo-release</id>
+            <name>SpringSource Repository release</name>
+            <url>http://repo.springsource.org/release</url>
+        </repository>
+        <repository>
+            <id>springsource-repo-snapshot</id>
+            <name>SpringSource Repository snapshot</name>
+            <url>http://repo.springsource.org/snapshot</url>
+        </repository>
+        <repository>
+            <id>codehaus.repo</id>
+            <url>http://repository.codehaus.org</url>
+            <name>codehaus.repo</name>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
 </project>

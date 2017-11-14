@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/formatq/aksi-java.svg?branch=master)](https://travis-ci.org/formatq/aksi-java)
+
 # Project Title
 
 One Paragraph of project description goes here

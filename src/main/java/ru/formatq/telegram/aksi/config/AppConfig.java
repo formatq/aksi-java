@@ -6,8 +6,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
+import ru.formatq.telegram.aksi.repository.ChatDao;
+import ru.formatq.telegram.aksi.repository.impl.ChatDaoImpl;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -24,7 +27,10 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() throws IOException {
-        return new EmbeddedDatabaseBuilder().addScript("import.sql").build();
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+//                .addScript("import.sql")
+                .build();
     }
 
     @Bean
@@ -32,6 +38,13 @@ public class AppConfig {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         return sessionFactory.getObject();
+    }
+
+    @Bean
+    public ChatDao chatDao() throws Exception {
+        ChatDaoImpl chatDao = new ChatDaoImpl();
+        chatDao.setSqlSessionFactory(sqlSessionFactory());
+        return chatDao;
     }
 
 

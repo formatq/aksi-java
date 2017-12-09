@@ -1,6 +1,7 @@
 package ru.formatq.telegram.aksi.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Karma implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -9,6 +10,9 @@ public class Karma implements Serializable {
     private User user;
     private Chat chat;
     private Integer toofastShowed = 0;
+
+    private Date lastTimeVoted;
+    private Date lastUpdated;
 
     public Long getLevel() {
         return level;
@@ -40,5 +44,21 @@ public class Karma implements Serializable {
 
     public void setToofastShowed(Integer toofastShowed) {
         this.toofastShowed = toofastShowed;
+    }
+
+    public Date getLastTimeVoted() {
+        return lastTimeVoted;
+    }
+
+    public void setLastTimeVoted(Date lastTimeVoted) {
+        this.lastTimeVoted = lastTimeVoted;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

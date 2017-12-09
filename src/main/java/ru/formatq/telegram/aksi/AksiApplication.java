@@ -13,7 +13,7 @@ import ru.formatq.telegram.aksi.config.AppConfig;
 import ru.formatq.telegram.aksi.handler.AksiHandlers;
 
 @SpringBootApplication
-@Import(AppConfig.class)
+@Import({AppConfig.class})
 public class AksiApplication implements CommandLineRunner {
 
     private static Logger log = LoggerFactory.getLogger(AksiApplication.class);

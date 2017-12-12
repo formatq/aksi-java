@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.formatq.telegram.aksi.AksiApplication;
 import ru.formatq.telegram.aksi.repository.ChatDao;
 
@@ -32,13 +34,24 @@ public class AksiHandlers extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
-        System.out.println(update);
+        log.info(update.toString());
     }
 
     public void onUpdatesReceived(List<Update> updates) {
         for (Update update : updates) {
             chatDao.selectChatById(1);
             log.info(update.toString());
+            if (update.hasMessage()){
+                Long chatId = update.getMessage().getChatId();
+                String fname = update.getMessage().getChat().getFirstName();
+                SendMessage sm = new SendMessage(chatId, "Hello " + fname + "!");
+                try {
+                    execute(sm);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            }
+
         }
 
     }

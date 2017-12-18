@@ -6,8 +6,6 @@ WORKDIR /app
 
 ADD . /app
 
-COPY application.properties /src/main/resources/
-
 RUN mvn clean install
 
 #final stage
@@ -16,8 +14,9 @@ FROM openjdk:8-jre
 WORKDIR /aksi
 
 COPY --from=build-env  /root/.m2/repository/ru/formatq/telegram/aksi/1.0-SNAPSHOT/aksi-1.0-SNAPSHOT.jar /aksi/app.jar
+COPY application.properties /aksi/application.properties
 
-CMD java -Xmx64m -Xss1024k -jar /aksi/app.jar
+CMD ["java", "-jar", "/aksi/app.jar", "/aksi/application.properties"]
 
 
 

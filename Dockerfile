@@ -6,6 +6,8 @@ WORKDIR /app
 
 ADD . /app
 
+COPY application.properties /src/main/resources/
+
 RUN mvn clean install
 
 #final stage

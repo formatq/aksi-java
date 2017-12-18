@@ -14,7 +14,7 @@ FROM openjdk:8-jre
 WORKDIR /aksi
 
 COPY --from=build-env  /root/.m2/repository/ru/formatq/telegram/aksi/1.0-SNAPSHOT/aksi-1.0-SNAPSHOT.jar /aksi/app.jar
-COPY application.properties /aksi/application.properties
+#COPY application.properties /aksi/application.properties
 
 CMD ["java", "-jar", "/aksi/app.jar", "/aksi/application.properties"]
 

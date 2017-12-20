@@ -1,9 +1,9 @@
 package ru.formatq.telegram.aksi.repository;
 
-import ru.formatq.telegram.aksi.model.Chat;
+import ru.formatq.telegram.db.aksi.postgres.tables.records.ChatRecord;
 
 
 public interface ChatDao {
 
-    Chat selectChatById(long id);
+    ChatRecord selectChatById(long id);
 }

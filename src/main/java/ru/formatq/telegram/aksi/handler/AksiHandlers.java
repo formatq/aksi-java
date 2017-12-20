@@ -38,7 +38,7 @@ public class AksiHandlers extends TelegramLongPollingBot {
     public void onUpdatesReceived(List<Update> updates) {
         for (Update update : updates) {
             chatDao.selectChatById(1);
-            log.info(update.toString());
+            //log.info(update.toString());
         }
 
     }

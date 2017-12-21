@@ -17,3 +17,43 @@ create table if not exists "Chat"
 )
 ;
 
+create unique index if not exists chat_chat_id_uindex
+  on "Chat" (chat_id)
+;
+
+create table if not exists "User"
+(
+  id numeric(10) not null
+    constraint "User_pkey"
+    primary key,
+  username varchar(255),
+  first_name varchar(255),
+  last_name varchar(255),
+  img varchar(60),
+  lang integer,
+  last_updated timestamp,
+  date_added timestamp,
+  title varchar(32),
+  cookies numeric(10)
+)
+;
+
+create unique index if not exists user_id_uindex
+  on "User" (id)
+;
+
+create table if not exists "Karma"
+(
+  user_id numeric(10) not null
+    constraint karma_user_id_fk
+    references "User",
+  chat_id numeric(10) not null
+    constraint karma_chat_id_fk
+    references "Chat",
+  counts numeric(10),
+  last_updated timestamp,
+  last_time_voted timestamp,
+  toofast_showed numeric default 0
+)
+;
+

@@ -165,7 +165,7 @@
                                     <!--<daos>false</daos>-->
                                 </generate>
                                 <target>
-                                    <packageName>ru.formatq.telegram.db.aksi.postgres</packageName>
+                                    <packageName>ru.formatq.telegram.aksi.db</packageName>
                                     <directory>target/generated-sources/jooq-postgres</directory>
                                 </target>
                             </generator>

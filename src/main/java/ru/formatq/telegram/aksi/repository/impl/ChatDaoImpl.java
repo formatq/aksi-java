@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.formatq.telegram.aksi.repository.ChatDao;
-import ru.formatq.telegram.db.aksi.postgres.tables.records.ChatRecord;
+import ru.formatq.telegram.aksi.db.tables.records.ChatRecord;
 
 import java.util.List;
 
-import static ru.formatq.telegram.db.aksi.postgres.tables.Chat.CHAT;
+import static ru.formatq.telegram.aksi.db.tables.Chat.CHAT;
 
 @Repository
 public class ChatDaoImpl implements ChatDao {

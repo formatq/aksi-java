@@ -46,10 +46,10 @@ create table if not exists "Karma"
 (
   user_id numeric(10) not null
     constraint karma_user_id_fk
-    references "User",
+    references "User"(id),
   chat_id numeric(10) not null
     constraint karma_chat_id_fk
-    references "Chat",
+    references "Chat"(chat_id),
   counts numeric(10),
   last_updated timestamp,
   last_time_voted timestamp,

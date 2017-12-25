@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
 
     <groupId>ru.formatq.telegram</groupId>
@@ -25,17 +25,19 @@
         <jsoup.version>1.10.2</jsoup.version>
         <commonsio.version>2.5</commonsio.version>
 
-        <jooq.version>3.9.5</jooq.version>
-        <hibernate-validator.version>5.3.5.Final</hibernate-validator.version>
+        <skip.jooq.generation>false</skip.jooq.generation>
 
-        <spring-boot.version>1.5.7.RELEASE</spring-boot.version>
+        <hibernate-validator.version>5.3.5.Final</hibernate-validator.version>
+        <mybatis.version>3.4.5</mybatis.version>
+        <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     </properties>
 
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jooq</artifactId>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.1</version>
         </dependency>
 
         <dependency>
@@ -81,6 +83,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
@@ -114,7 +123,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -130,56 +139,34 @@
                 </executions>
             </plugin>
 
+            <!--<plugin>-->
+                <!--<groupId>org.flywaydb</groupId>-->
+                <!--<artifactId>flyway-maven-plugin</artifactId>-->
+                <!--<version>5.0.3</version>-->
 
+                <!--&lt;!&ndash; Note that we're executing the Flyway-->
+                     <!--plugin in the "generate-sources" phase &ndash;&gt;-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>migrate</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
 
-            <!-- The jOOQ code generator plugin -->
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
-
-                <executions>
-                    <execution>
-                        <id>generate-postgres</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <jdbc>
-                                <driver>${spring.datasource.driverClassName}</driver>
-                                <url>${spring.datasource.url}</url>
-                                <user>${spring.datasource.username}</user>
-                                <password>${spring.datasource.password}</password>
-                            </jdbc>
-                            <generator>
-                                <database>
-                                    <name>org.jooq.util.postgres.PostgresDatabase</name>
-                                    <includes>.*</includes>
-                                    <excludes></excludes>
-                                    <inputSchema>public</inputSchema>
-                                </database>
-                                <generate>
-                                    <!--<deprecated>false</deprecated>-->
-                                    <!--<instanceFields>true</instanceFields>-->
-                                    <!--<pojos>false</pojos>-->
-                                    <!--<daos>false</daos>-->
-                                </generate>
-                                <target>
-                                    <packageName>ru.formatq.telegram.aksi.db</packageName>
-                                    <directory>target/generated-sources/jooq-postgres</directory>
-                                </target>
-                            </generator>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${postgresql.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+                <!--&lt;!&ndash; Note that we need to prefix the db/migration-->
+                     <!--path with filesystem: to prevent Flyway-->
+                     <!--from looking for our migration scripts-->
+                     <!--only on the classpath &ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<url>${spring.datasource.url}</url>-->
+                    <!--<user>${spring.datasource.username}/user>-->
+                    <!--<locations>-->
+                        <!--<location>filesystem:src/main/resources/db/migration</location>-->
+                    <!--</locations>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
 
 
         </plugins>
@@ -202,9 +189,21 @@
                 <aksi.config.location>file:C:/conf/application.properties</aksi.config.location>
             </properties>
         </profile>
+
+        <profile>
+            <id>skip-jooq-generation</id>
+            <properties>
+                <skip.jooq.generation>true</skip.jooq.generation>
+            </properties>
+        </profile>
     </profiles>
 
     <repositories>
+        <repository>
+            <id>maven-central</id>
+            <name>Central Repository</name>
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
         <repository>
             <id>springsource-repo-release</id>
             <name>SpringSource Repository release</name>

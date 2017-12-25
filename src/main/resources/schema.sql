@@ -1,4 +1,4 @@
-create table if not exists "Chat"
+create table if not exists Chat
 (
   id serial not null
     constraint "Chat_pkey"
@@ -21,7 +21,7 @@ create unique index if not exists chat_chat_id_uindex
   on "Chat" (chat_id)
 ;
 
-create table if not exists "User"
+create table if not exists User
 (
   id numeric(10) not null
     constraint "User_pkey"
@@ -42,7 +42,7 @@ create unique index if not exists user_id_uindex
   on "User" (id)
 ;
 
-create table if not exists "Karma"
+create table if not exists Karma
 (
   user_id numeric(10) not null
     constraint karma_user_id_fk

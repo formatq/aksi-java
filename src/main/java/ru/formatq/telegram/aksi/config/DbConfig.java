@@ -7,28 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
-import java.io.IOException;
 
 @Configuration
-public class AppConfig {
+@MapperScan(basePackages = "ru.formatq.telegram.aksi.mapper", sqlSessionFactoryRef = "sqlSessionFactory" )
+public class DbConfig {
 
-    @Bean
-    TelegramBotsApi telegramBotsApi() {
-        return new TelegramBotsApi();
+    @Autowired
+    @Qualifier("dataSource")
+    DataSource dataSource;
+
+    @Bean(name = "sqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
+        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        return sessionFactory.getObject();
     }
-
-    @PostConstruct
-    public void init() throws Exception {
-        ApiContextInitializer.init();
-    }
-
 }

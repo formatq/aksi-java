@@ -1,6 +1,5 @@
 package ru.formatq.telegram.aksi;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,11 @@ import org.springframework.context.annotation.Import;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.formatq.telegram.aksi.config.AppConfig;
+import ru.formatq.telegram.aksi.config.DbConfig;
 import ru.formatq.telegram.aksi.handler.AksiHandlers;
 
-import javax.sql.DataSource;
-
 @SpringBootApplication
-@Import({AppConfig.class})
+@Import({AppConfig.class, DbConfig.class})
 public class AksiApplication implements CommandLineRunner {
 
     private static Logger log = LoggerFactory.getLogger(AksiApplication.class);
@@ -39,7 +37,6 @@ public class AksiApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
-            log.info("Start");
             telegramBotsApi.registerBot(aksiHandlers);
         } catch (TelegramApiException e) {
             log.error("Error", e);

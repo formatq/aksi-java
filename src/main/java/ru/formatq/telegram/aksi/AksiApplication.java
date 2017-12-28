@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.generics.BotSession;
 import ru.formatq.telegram.aksi.config.AppConfig;
 import ru.formatq.telegram.aksi.config.DbConfig;
 import ru.formatq.telegram.aksi.handler.AksiHandlers;
@@ -37,7 +38,7 @@ public class AksiApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         try {
-            telegramBotsApi.registerBot(aksiHandlers);
+            BotSession botSession = telegramBotsApi.registerBot(aksiHandlers);
         } catch (TelegramApiException e) {
             log.error("Error", e);
         }

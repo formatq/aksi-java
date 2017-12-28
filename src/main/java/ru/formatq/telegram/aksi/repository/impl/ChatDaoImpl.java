@@ -11,18 +11,5 @@ import ru.formatq.telegram.aksi.repository.ChatDao;
 @Repository
 public class ChatDaoImpl implements ChatDao {
 
-    @Autowired
-    private ChatMapper chatMapper;
 
-    private final Logger logger = LoggerFactory.getLogger(ChatDaoImpl.class);
-
-    @Override
-    public Chat selectChatById(Long id) {
-        return chatMapper.selectChatById(id);
-    }
-
-    @Override
-    public Long insert(Chat chat) {
-        return chatMapper.insert(chat);
-    }
 }

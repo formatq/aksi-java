@@ -7,12 +7,12 @@ create table if not exists chat
 	title varchar(255),
 	lang varchar(16),
 	username varchar(255),
-	silent_mode boolean,
+	silent_mode boolean default false,
 	cooldown double precision,
-	is_presented boolean,
+	is_presented boolean default true,
 	date_add timestamp,
 	date_remove timestamp,
-	is_ariphmetic_growth boolean,
+	is_ariphmetic_growth boolean default false,
 	for_admin boolean,
 	date_update timestamp
 )

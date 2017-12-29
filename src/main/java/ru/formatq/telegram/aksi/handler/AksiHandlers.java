@@ -34,36 +34,46 @@ public class AksiHandlers extends TelegramLongPollingBot {
         log.info("Register botHandler. Name '{}', Token '{}'", name, token);
     }
 
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage()) {
-            Chat chat = new Chat();
-            chat.setChatId(update.getMessage().getChatId());
-            chat.setTitle(update.getMessage().getChat().getTitle());
-            System.out.println(chat);
-            Long asd = chatService.insert(chat);
-        }
-        if (update.getMessage().getLeftChatMember() != null) {
-            if (getBotName().equals(update.getMessage().getLeftChatMember().getUserName())) {
-                log.info("getLeftChatMember " + update.getMessage().getLeftChatMember());
-                chatService.setPresented(update.getMessage().getChatId(), false);
+    public void onUpdateReceived(Update upd) {
+        if (upd.hasMessage()) {
+            Chat chat = chatService.getByChatId(upd.getMessage().getChatId());
+            if (chat == null) {
+                chat = new Chat();
+                chat.setChatId(upd.getMessage().getChatId());
+                chat.setTitle(upd.getMessage().getChat().getTitle());
+                chat.setUsername(upd.getMessage().getChat().getUserName());
+                chat.setPresented(true);
+                log.info("New chat added " + chat);
+                Long asd = chatService.insert(chat);
             }
-        }
-        if (update.getMessage().getNewChatMembers() != null) {
-            boolean isThisBot = false;
-            for (User user : update.getMessage().getNewChatMembers()) {
-                if (user.getUserName().equals(getBotName())) {
-                    isThisBot = true;
-                    break;
+            if (upd.getMessage().getLeftChatMember() != null && chat.isPresented()) {
+                if (name.equals(upd.getMessage().getLeftChatMember().getUserName())) {
+                    log.info("Bot removed from group " + upd.getMessage().getChatId());
+                    chatService.setPresented(upd.getMessage().getChatId(), false);
                 }
             }
+            if (upd.getMessage().getNewChatMembers() != null && !chat.isPresented()) {
+                boolean isThisBot = false;
+                for (User user : upd.getMessage().getNewChatMembers()) {
+                    if (user.getUserName().equals(name)) {
+                        isThisBot = true;
+                        break;
+                    }
+                }
 
-            if (isThisBot) {
-                log.info("getNewChatMembers " + update.getMessage().getLeftChatMember());
-                chatService.setPresented(update.getMessage().getChatId(), true);
+                if (isThisBot) {
+                    log.info("Bot added to group " + upd.getMessage().getChatId());
+                    chatService.setPresented(upd.getMessage().getChatId(), true);
+                }
+            }
+            if (upd.getMessage().getMigrateToChatId() != null) {
+                chatService.migrateChatId(upd.getMessage().getChatId(), upd.getMessage().getMigrateToChatId());
+            }
+
+            if (upd.getMessage().getNewChatTitle() != null) {
+                chatService.updateTitle(upd.getMessage().getChatId(), upd.getMessage().getNewChatTitle());
             }
         }
-
-
     }
 
     private String getBotName() {

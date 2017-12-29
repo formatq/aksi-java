@@ -4,10 +4,13 @@ import org.apache.ibatis.annotations.*;
 import ru.formatq.telegram.aksi.model.Chat;
 
 @Mapper
+@CacheNamespace()
 public interface ChatMapper {
 
-    @Select("SELECT * FROM Chat WHERE id = #{id}")
-    Chat selectChatById(@Param("id") Long id);
+    @Select("SELECT * FROM Chat WHERE chat_id = #{chatId}")
+    @Options(useCache = true)
+    @ResultType(Chat.class)
+    Chat getByChatId(@Param("chatId") Long chatId);
 
     @Insert("INSERT INTO chat (chat_id, title, username, date_add)" +
             " VALUES (#{chatId}, #{title}, #{username}, current_timestamp)" +
@@ -19,5 +22,9 @@ public interface ChatMapper {
     @Update("UPDATE chat SET date_update=current_timestamp, is_presented = #{isPresented} WHERE chat_id = #{chatId} AND is_presented = FALSE")
     Long setPresented(@Param("chatId") Long chatId, @Param("isPresented") Boolean isPresented);
 
+    @Update("UPDATE chat SET date_update=current_timestamp, chat_id = #{newChatId} WHERE chat_id = #{oldChatId}")
+    Long migrateChatId(Long oldChatId, Long newChatId);
 
+    @Update("UPDATE chat SET date_update=current_timestamp, title = #{title} WHERE chat_id = #{chatId}")
+    Long updateTitle(Long chatId, String title);
 }

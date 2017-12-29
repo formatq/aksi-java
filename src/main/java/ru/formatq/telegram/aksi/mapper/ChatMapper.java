@@ -4,10 +4,10 @@ import org.apache.ibatis.annotations.*;
 import ru.formatq.telegram.aksi.model.Chat;
 
 @Mapper
-@CacheNamespace()
+@CacheNamespace(flushInterval = 300000, size = 2048)
 public interface ChatMapper {
 
-    @Select("SELECT * FROM Chat WHERE chat_id = #{chatId}")
+    @Select("SELECT id, chat_id, title, username, is_presented, date_add, date_update FROM Chat WHERE chat_id = #{chatId}")
     @Options(useCache = true)
     @ResultType(Chat.class)
     Chat getByChatId(@Param("chatId") Long chatId);

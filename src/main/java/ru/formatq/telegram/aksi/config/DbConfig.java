@@ -2,6 +2,7 @@ package ru.formatq.telegram.aksi.config;
 
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.cache.decorators.LruCache;
+import org.apache.ibatis.cache.decorators.ScheduledCache;
 import org.apache.ibatis.cache.impl.PerpetualCache;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -25,7 +26,7 @@ public class DbConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setCache(new LruCache(getCache()));
+        sessionFactory.setCache(new LruCache(new ScheduledCache(getCache())));
         return sessionFactory.getObject();
     }
 

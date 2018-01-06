@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -75,6 +76,11 @@ public class AksiHandlers extends TelegramLongPollingBot {
                 if (StringUtils.startsWithAny(upd.getMessage().getText(), "+", "-", "\uD83D\uDC4D", "\uD83D\uDC4E")) {
                     User user = getUser(upd.getMessage().getFrom());
                     log.info("User updated karma");
+                }
+                try {
+                    sendApiMethod(new SendMessage(upd.getMessage().getChatId(),"Hello, "+ upd.getMessage().getFrom().getFirstName() + " " + upd.getMessage().getFrom().getLastName()));
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
                 }
 
             }

@@ -1,0 +1,17 @@
+spring.config.location=@aksi.config.location@
+
+#Telegram Configuration
+bot.name=
+bot.token=
+
+#jOOQ Configuration
+spring.jooq.sql-dialect=Postgres
+
+#Postgresql Configuration
+spring.datasource.driverClassName=org.postgresql.Driver
+spring.datasource.url=jdbc:postgresql://localhost:5432/aksi
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+
+spring.datasource.initialize=false
+spring.datasource.continueOnError=false
